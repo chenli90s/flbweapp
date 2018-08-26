@@ -143,15 +143,16 @@ class Index extends Component {
             autoplay={isAutoplay}
             indicatorDots={hasIndicatorDots}
             preMargin='20'
+            style="height: 240px;"
           >
             <SwiperItem>
-              <Image src={one}></Image>
+              <Image src={one} style="width: 100%;"></Image>
             </SwiperItem>
             <SwiperItem>
-              <Image src={two}></Image>
+              <Image src={two} style="width: 100%;"></Image>
             </SwiperItem>
             <SwiperItem>
-              <Image src={three}></Image>
+              <Image src={three} style="width: 100%;"></Image>
             </SwiperItem>
           </Swiper>
         </View>

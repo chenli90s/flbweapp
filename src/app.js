@@ -25,6 +25,7 @@ class App extends Component {
       'pages/user/myorder',
       'pages/user/prodorder',
       'pages/user/join',
+      'pages/user/prod',
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -58,18 +59,18 @@ class App extends Component {
     }
   }
 
-  async componentDidMount () {
-    // console.log('didmount')
-    let user = await api.login()
-    if(user.status===600){
-      // todo 未关注公众号
-
-    }else {
-      // 存储id
-      Taro.setStorageSync('id', user.status)
-      Taro.setStorageSync('key', user.session_key)
-    }
-  }
+  // async componentDidMount () {
+  //   // console.log('didmount')
+  //   let user = await api.login()
+  //   if(user.status===600){
+  //     // todo 未关注公众号
+  //
+  //   }else {
+  //     // 存储id
+  //     Taro.setStorageSync('id', user.status)
+  //     Taro.setStorageSync('key', user.session_key)
+  //   }
+  // }
 
   componentDidShow () {}
 
