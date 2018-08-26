@@ -1,0 +1,89 @@
+import Taro, { Component } from '@tarojs/taro'
+import '@tarojs/async-await'
+import { Provider } from '@tarojs/redux'
+import api from './utils/api'
+
+import Index from './pages/index'
+
+import configStore from './store'
+
+import './app.css'
+
+const store = configStore()
+
+class App extends Component {
+
+  config = {
+    pages: [
+      'pages/index/index',
+      'pages/index/form',
+      'pages/prud/index',
+      'pages/prud/submitprod',
+      'pages/pers/index',
+      'pages/addremg/addrelist',
+      'pages/addremg/editaddre',
+      'pages/user/myorder',
+      'pages/user/prodorder',
+      'pages/user/join',
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      backgroundColor: '#fff',
+      selectedColor: '#1afa29',
+      list: [
+        {
+          pagePath: 'pages/index/index',
+          text: '回收',
+          iconPath: 'img/home.png',
+          selectedIconPath: 'img/qhome.png'
+        },
+        {
+          pagePath: 'pages/prud/index',
+          text: '积分商城',
+          iconPath: 'img/pt.png',
+          selectedIconPath: 'img/qpt.png'
+        },
+        {
+          pagePath: 'pages/pers/index',
+          text: '个人中心',
+          iconPath: 'img/per.png',
+          selectedIconPath: 'img/qper.png'
+        }
+      ]
+    }
+  }
+
+  async componentDidMount () {
+    // console.log('didmount')
+    let user = await api.login()
+    if(user.status===600){
+      // todo 未关注公众号
+
+    }else {
+      // 存储id
+      Taro.setStorageSync('id', user.status)
+      Taro.setStorageSync('key', user.session_key)
+    }
+  }
+
+  componentDidShow () {}
+
+  componentDidHide () {}
+
+  componentCatchError () {}
+
+  render () {
+    return (
+      <Provider store={store}>
+        <Index />
+      </Provider>
+    )
+  }
+}
+
+Taro.render(<App />, document.getElementById('app'))
