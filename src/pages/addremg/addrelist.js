@@ -34,12 +34,16 @@ class addrelist extends Component{
     load: false
   }
 
-  componentDidMount = async ()=>{
-    this.setState({load: true})
-    let id = Taro.getStorageSync('id')
-    let address = await http.get('/show_addr?unionid=' + id,);
-    this.setState({list: address.res, load: false})
-  };
+  // componentDidMount = async ()=>{
+  //   this.setState({load: true})
+  //   let id = Taro.getStorageSync('id')
+  //   let address = await http.get('/show_addr?unionid=' + id,);
+  //   if(address.status===600){
+  //     this.setState({load: false})
+  //     return
+  //   }
+  //   this.setState({list: address.res, load: false})
+  // };
 
   add = ()=>{
     this.props.editaddress(null);
@@ -55,6 +59,10 @@ class addrelist extends Component{
     this.setState({load: true})
     let id = Taro.getStorageSync('id')
     let address = await http.get('/show_addr?unionid=' + id,);
+    if(address.status===600){
+      this.setState({load: false})
+      return
+    }
     this.setState({list: address.res, load: false})
   }
 
@@ -66,6 +74,7 @@ class addrelist extends Component{
 
   render(){
     const {list, load } = this.state
+    console.log(list)
     return (
       <View>
         <i-button onClick={this.add} type='success' long='true'>添加地址</i-button>

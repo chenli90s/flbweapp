@@ -44,8 +44,14 @@ class Form extends Component{
 
 
   handleDateChange = e=>{
-    // console.log(e)
-    this.setState({dateSel: e.detail.value})
+    let date = e.detail.value;
+    let d = new Date(date)
+    let year = d.getFullYear()
+    let mon = d.getMonth()+1
+    let day = d.getDay()
+    let dat = `${year.toString()}-${mon.toString()}-${day.toString()}`
+    console.log(dat)
+    this.setState({dateSel: dat})
   }
 
   handleTimeChange = e=>{
@@ -75,6 +81,9 @@ class Form extends Component{
 
     // {addr: "给你我招惹他", id: 56, phone: "859 6494 9646", name: "小心二"}
     // {addr: "另外一距离我", id: 59, phone: "848 5656 6", name: "哦哦哦low"}
+    if(address.status===600){
+      return
+    }
     if(address.res.length>0){
       // this.setState({addre: address.res[0]})
       this.props.setaddress(address.res[0])
@@ -82,16 +91,21 @@ class Form extends Component{
   }
 
   submit = async ()=>{
+    console.log(this.state.dateSel, this.state.timeSel)
     const {address} = this.props.addresser;
-    if(!address){
+    if(!address.addr){
       wx.showToast({title:'地址不能为空', duration: 1500, icon: 'none'})
+      return
+    }
+    if(!this.state.weight){
+      wx.showToast({title:'斤数不能为空', duration: 1500, icon: 'none'})
       return
     }
     let id = Taro.getStorageSync('id');
     this.state.addre = address
     let params = {
       weight: this.state.weight,
-      something: this.state.type,
+      something: this.state.type||'未填写',
       address: this.state.addre.addr,
       phone: this.state.addre.phone,
       unionid: id,

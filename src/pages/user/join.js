@@ -49,10 +49,10 @@ class Join extends Component {
   }
 
   async submit(){
-    // if(!this.state.phone&&!this.state.truename){
-    //   wx.showToast({title:'填写内容不能为空', duration: 1500, icon: 'none'})
-    //   return
-    // }
+    if(!this.state.phone&&!this.state.truename){
+      wx.showToast({title:'填写内容不能为空', duration: 1500, icon: 'none'})
+      return
+    }
     let id = Taro.getStorageSync('id');
     let {truename, phone, type } = this.state
     await http.get('/applys', {truename, phone, type, unionid: id})

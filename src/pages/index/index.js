@@ -91,9 +91,15 @@ class Index extends Component {
     console.log('-------')
   }
 
-  static async componentDidShow () {
-    // console.log('didmount')
-    let user = await api.login()
+  async componentDidMount () {
+    // 获取地理位置
+    Taro.showShareMenu()
+    let location = await Taro.getLocation({type:'gcj02'})
+    console.log(location)
+    let w = location.latitude.toString()
+    let j = location.longitude.toString()
+    let user = await api.login(w, j)
+    console.log(user)
     if(user.status===600){
       //  未关注公众号
       this.setState({visible: true})
@@ -143,16 +149,16 @@ class Index extends Component {
             autoplay={isAutoplay}
             indicatorDots={hasIndicatorDots}
             preMargin='20'
-            style="height: 240px;"
+            style='height: 240px;'
           >
             <SwiperItem>
-              <Image src={one} style="width: 100%;"></Image>
+              <Image src={one} style='width: 100%;'></Image>
             </SwiperItem>
             <SwiperItem>
-              <Image src={two} style="width: 100%;"></Image>
+              <Image src={two} style='width: 100%;'></Image>
             </SwiperItem>
             <SwiperItem>
-              <Image src={three} style="width: 100%;"></Image>
+              <Image src={three} style='width: 100%;'></Image>
             </SwiperItem>
           </Swiper>
         </View>
@@ -161,7 +167,7 @@ class Index extends Component {
         </i-grid>
         <i-modal visible={visible} title='请关注公众号' show-ok={false} show-cancel={false}>
           <Text>您未关注我们的公众号，请先关注我们的公众号吧! 不然无法提交订单</Text>
-          <Image src={qr} className='qr-image' style="width: 275px;"></Image>
+          <Image src={qr} className='qr-image' style='width: 275px;'></Image>
         </i-modal>
       </View>
     )

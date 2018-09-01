@@ -1,7 +1,7 @@
 import { ADDRESS, EDITAddress} from '../constants/counter'
 
 const INITIAL_STATE = {
-  address: null,
+  address: [],
   editaddress: null
 }
 

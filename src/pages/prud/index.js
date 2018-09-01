@@ -42,7 +42,7 @@ class Preduct extends Component {
   }
 
   async submit(val){
-    if(this.state.score<val.jia){
+    if(this.state.score<val.need_int){
       wx.showToast({title:'积分不够', duration: 1500, icon: 'none'})
       return
     }
@@ -53,7 +53,7 @@ class Preduct extends Component {
       return
     }
 
-    Taro.navigateTo({url:`/pages/prud/submitprod?point=${val.jia}&goodid=${val.id}`})
+    Taro.navigateTo({url:`/pages/prud/submitprod?point=${val.need_int}&goodid=${val.id}`})
 
   }
 
@@ -71,7 +71,7 @@ class Preduct extends Component {
                     <image src={`https://www.hlfeilibao.com${val.url}`} className='i-prod-icon' />
                   {/*</i-grid-icon>*/}
                   <i-grid-label>{val.goods_name}</i-grid-label>
-                  <i-grid-label>{`积分： ${val.jia}`}</i-grid-label>
+                  <i-grid-label>{`积分： ${val.need_int}`}</i-grid-label>
                   <i-grid-label>
                     <i-button size='small' type='success' inline shape='circle' onClick={this.submit.bind(this,val)}>兑换</i-button>
                   </i-grid-label>

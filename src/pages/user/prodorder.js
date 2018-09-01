@@ -29,6 +29,10 @@ class ProdOrder extends Component {
     this.setState({load: true})
     let id = Taro.getStorageSync('id')
     let res = await http.get('/goods_order?', {unionid: id});
+    if(res.status===600){
+      this.setState({load: false});
+      return
+    }
     this.setState({load: false,data: res.res})
   }
 
@@ -49,7 +53,7 @@ class ProdOrder extends Component {
     let { load, data} = this.state;
     return (
       <View>
-        {data.map((value, id) => (
+        {data&&data.map((value, id) => (
           <i-card title='' key={id}>
             <view slot='content' className='i-contents'>
               <i-icon type='mobilephone_fill' />

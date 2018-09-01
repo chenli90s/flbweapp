@@ -14,6 +14,7 @@ const store = configStore()
 class App extends Component {
 
   config = {
+    navigationBarTitleText: '废立宝',
     pages: [
       'pages/index/index',
       'pages/index/form',
@@ -63,7 +64,7 @@ class App extends Component {
   //   // console.log('didmount')
   //   let user = await api.login()
   //   if(user.status===600){
-  //     // todo 未关注公众号
+  //     // 未关注公众号
   //
   //   }else {
   //     // 存储id

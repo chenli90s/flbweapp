@@ -13,8 +13,9 @@ export default {
       if (res.statusCode === 200) {
         resolve(res.data)
       } else {
+        console.log('网络错误', res.statusCode)
+        reject()
       }
-      reject()
     })
   }
 }
