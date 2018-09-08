@@ -54,6 +54,16 @@ class Persion extends Component {
       )
     }
 
+    if(role===3){
+      view = (
+        <i-cell-group>
+          <i-cell title='商城订单' is-link url='/pages/superadmin/prudorder' />
+          <i-cell title='管理' is-link url='/pages/superadmin/manageuser'></i-cell>
+          <i-cell title='商品管理' is-link url='/pages/superadmin/history'></i-cell>
+          <i-cell title='历史订单' is-link url='/pages/superadmin/historyorder'></i-cell>
+        </i-cell-group>
+      )
+    }
 
 
     return (

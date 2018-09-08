@@ -31,6 +31,9 @@ class App extends Component {
       'pages/admin/myorder',
       'pages/admin/calc',
       'pages/admin/history',
+      'pages/superadmin/prudorder',
+      'pages/superadmin/manageuser',
+      'pages/superadmin/historyorder',
     ],
     window: {
       backgroundTextStyle: 'light',

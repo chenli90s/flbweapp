@@ -39,7 +39,7 @@ class SubmitProd extends Component{
   }
 
   async submit(){
-    if(!this.state.phone&&!this.state.addr){
+    if(!this.state.phone||!this.state.addr){
       wx.showToast({title:'地址不能为空', duration: 1500, icon: 'none'});
       return
     }

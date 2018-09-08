@@ -47,6 +47,7 @@ class Preduct extends Component {
       return
     }
     let id = Taro.getStorageSync('id')
+    //todo : 提交时解开注释
     let role = await http.get('/per_info', {unionid: id})
     if(role.role>1){
       wx.showToast({title:'管理员，接单员无法提交', duration: 1500, icon: 'none'})
