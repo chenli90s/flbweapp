@@ -74,7 +74,7 @@ class addrelist extends Component{
 
   render(){
     const {list, load } = this.state
-    console.log(list)
+    // console.log(list)
     return (
       <View>
         <i-button onClick={this.add} type='success' long='true'>添加地址</i-button>

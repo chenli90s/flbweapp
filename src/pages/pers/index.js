@@ -1,5 +1,6 @@
 import Taro, {Component} from '@tarojs/taro'
 import {View} from '@tarojs/components'
+import http from '../../utils/http'
 
 
 import './index.css'
@@ -15,25 +16,49 @@ class Persion extends Component {
     }
   }
 
+  state = {
+    role: 0
+  }
 
   componentWillUnmount() {
   }
 
-  componentDidShow() {
+  async componentDidShow() {
+    let id = Taro.getStorageSync('id');
+    let res = await http.get('/per_info', {unionid: id})
+    this.setState(res)
   }
 
   componentDidHide() {
   }
 
   render() {
-    return (
-      <View className='index'>
-        <i-cell-group>
+    let {role} = this.state
+    let view = null
+    if(role===1){
+        view = (<i-cell-group>
           <i-cell title='我的订单' is-link url='/pages/user/myorder' />
           <i-cell title='我的积分' is-link url='/pages/user/prod'></i-cell>
           <i-cell title='商城订单' is-link url='/pages/user/prodorder'></i-cell>
-          <i-cell title='加入我们' is-link url='/pages/user/join'></i-cell>
+          <i-cell title='加入我们' is-link url='/pages/user/join'/>
+        </i-cell-group>)
+      }
+
+    if(role===2){
+      view = (
+        <i-cell-group>
+          <i-cell title='我要接单' is-link url='/pages/admin/getorder' />
+          <i-cell title='我的订单' is-link url='/pages/admin/myorder'></i-cell>
+          <i-cell title='历史订单' is-link url='/pages/admin/history'></i-cell>
         </i-cell-group>
+      )
+    }
+
+
+
+    return (
+      <View className='index'>
+        {view}
       </View>
     )
   }

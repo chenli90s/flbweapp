@@ -102,6 +102,11 @@ class Form extends Component{
       return
     }
     let id = Taro.getStorageSync('id');
+    let res = await http.get('/per_info', {unionid: id})
+    if(res.role>1){
+      wx.showToast({title:'管理员和接单员不能下单', duration: 1500, icon: 'none'})
+      return
+    }
     this.state.addre = address
     let params = {
       weight: this.state.weight,

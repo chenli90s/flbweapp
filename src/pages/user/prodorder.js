@@ -7,7 +7,7 @@ class ProdOrder extends Component {
 
   // noinspection JSAnnotator
   config = {
-    navigationBarTitleText: '我的订单',
+    navigationBarTitleText: '我的商城订单',
     usingComponents: {
       "i-load-more": "../../iview/load-more/index",
       "i-icon": "../../iview/icon/index",

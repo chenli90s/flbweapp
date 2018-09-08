@@ -27,6 +27,10 @@ class App extends Component {
       'pages/user/prodorder',
       'pages/user/join',
       'pages/user/prod',
+      'pages/admin/getorder',
+      'pages/admin/myorder',
+      'pages/admin/calc',
+      'pages/admin/history',
     ],
     window: {
       backgroundTextStyle: 'light',

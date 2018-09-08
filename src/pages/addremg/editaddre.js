@@ -41,6 +41,11 @@ class EditAddre extends Component{
   submit = async ()=>{
     let { editaddress } = this.props.addresser;
     let id = Taro.getStorageSync('id');
+    let {phone, name, addr} = this.state;
+    if(!phone||!name||!addr){
+      wx.showToast({title:'填写内容不能为空', duration: 1500, icon: 'none'})
+      return
+    }
     if(editaddress){
       await http.get('/xiu_addr', {unionid: id, ...this.state})
     }else {

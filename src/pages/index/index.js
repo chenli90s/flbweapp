@@ -77,9 +77,9 @@ class Index extends Component {
   }
 
   goToComponent = (value) => {
-    if(value.id>0){
+    if (value.id > 0) {
 // eslint-disable-next-line no-undef
-      wx.showToast({title:'此功能暂未开放', duration: 1500, icon: 'none'})
+      wx.showToast({title: '此功能暂未开放', duration: 1500, icon: 'none'})
       return
     }
     Taro.navigateTo({
@@ -87,23 +87,56 @@ class Index extends Component {
     })
   }
 
-  click(){
+  click() {
     console.log('-------')
   }
 
-  async componentDidMount () {
+  async update() {
+    const updateManager = wx.getUpdateManager()
+    updateManager.onCheckForUpdate(function (res) {
+    // 请求完新版本信息的回调
+
+      console.log(res)
+      if(res.hasUpdate){
+        updateManager.onUpdateReady(function () {
+          wx.showModal({
+            title: '更新提示',
+            content: '新版本已经准备好，是否重启应用？',
+            success: function (res) {
+              if (res.confirm) {
+                // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+                updateManager.applyUpdate()
+              }
+            }
+          })
+
+        })
+        updateManager.onUpdateFailed(function () {
+          // 新的版本下载失败
+          wx.showModal({
+            title: '更新提示',
+            content: '新版本下载失败',
+            showCancel: false
+          })
+        })
+      }
+    })
+  }
+
+  async componentDidMount() {
+    await this.update()
     // 获取地理位置
     Taro.showShareMenu()
-    let location = await Taro.getLocation({type:'gcj02'})
+    let location = await Taro.getLocation({type: 'gcj02'})
     console.log(location)
     let w = location.latitude.toString()
     let j = location.longitude.toString()
     let user = await api.login(w, j)
     console.log(user)
-    if(user.status===600){
+    if (user.status === 600) {
       //  未关注公众号
       this.setState({visible: true})
-    }else {
+    } else {
       // 存储id
       Taro.setStorageSync('id', user.status)
       Taro.setStorageSync('key', user.session_key)
@@ -113,14 +146,14 @@ class Index extends Component {
   render() {
     const {current, isAutoplay, duration, isCircular, interval, hasIndicatorDots, items, visible} = this.state;
     const groups = loda.chunk(items, 3);
-    const guid = groups.map((g, index)=>{
+    const guid = groups.map((g, index) => {
       return (
         <i-row key={index}>
-          {g.map((value)=>(
+          {g.map((value) => (
             <i-grid-item key={value.id}>
               <View onClick={this.goToComponent.bind(this, value)}>
                 <i-grid-icon>
-                  <image src={value.icon} />
+                  <image src={value.icon}/>
                 </i-grid-icon>
                 <i-grid-label>{value.name}</i-grid-label>
               </View>

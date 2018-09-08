@@ -40,11 +40,16 @@ class SubmitProd extends Component{
 
   async submit(){
     if(!this.state.phone&&!this.state.addr){
-      wx.showToast({title:'地址不能为空', duration: 1500, icon: 'none'})
+      wx.showToast({title:'地址不能为空', duration: 1500, icon: 'none'});
       return
     }
-    let id = Taro.getStorageSync('id')
-    let res = await http.get('/goods_duihuan', {...this.state, unionid:id})
+    let id = Taro.getStorageSync('id');
+    let result = await http.get('/per_info', {unionid: id});
+    if(result.role>1){
+      wx.showToast({title:'管理员和接单员不能下单', duration: 1500, icon: 'none'});
+      return
+    }
+    let res = await http.get('/goods_duihuan', {...this.state, unionid:id});
     console.log(res)
     wx.navigateBack()
   }
