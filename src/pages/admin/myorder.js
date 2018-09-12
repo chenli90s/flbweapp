@@ -53,6 +53,9 @@ class MyOrder extends Component{
               <i-icon type='group_fill' />
               {`名字: ${value.name}`}</view>
             <view slot='content' className='i-contents'>
+              <i-icon type='mobilephone_fill' />
+              {`电话: ${value.phone}`}</view>
+            <view slot='content' className='i-contents'>
               <i-icon type='flag_fill' />
               {`地址: ${value.address}`}</view>
             <view slot='content' className='i-contents'>

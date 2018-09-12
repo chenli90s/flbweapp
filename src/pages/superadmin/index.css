@@ -2,3 +2,35 @@
   margin-top: 100px;
   text-align: center;
 }
+
+.i-items{
+  margin: 10px 20px;
+  border-radius: 10px;
+  border: #dddddd solid;
+  background-color: #fff;
+}
+
+.i-bodys{
+  /*background-color: #dddddd;*/
+}
+
+.imgs{
+  display: flex;
+  justify-content: center;
+}
+
+.i-images{
+  width: 65%;
+  height: 170px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.contents{
+  text-align: center;
+}
+
+.i-btns{
+  display: flex;
+  justify-content: center;
+}

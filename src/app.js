@@ -34,6 +34,8 @@ class App extends Component {
       'pages/superadmin/prudorder',
       'pages/superadmin/manageuser',
       'pages/superadmin/historyorder',
+      'pages/superadmin/manageprud',
+      'pages/superadmin/editprud',
     ],
     window: {
       backgroundTextStyle: 'light',
