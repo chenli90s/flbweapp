@@ -40,8 +40,9 @@ class Preduct extends Component {
 
   componentDidHide() {
   }
-
+  isSubmit = false
   async submit(val){
+
     if(this.state.score<val.need_int){
       wx.showToast({title:'积分不够', duration: 1500, icon: 'none'})
       return
@@ -54,6 +55,11 @@ class Preduct extends Component {
       return
     }
 
+    // if(this.isSubmit){
+    //   return
+    // }else {
+    //   this.isSubmit = true
+    // }
     Taro.navigateTo({url:`/pages/prud/submitprod?point=${val.need_int}&goodid=${val.id}`})
 
   }

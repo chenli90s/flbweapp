@@ -9,13 +9,16 @@ export default {
     }
     // console.log(param)
     return new Promise(async (resolve, reject) => {
-      let res = await Taro.request(param)
-      if (res.statusCode === 200) {
-        resolve(res.data)
-      } else {
-        console.log('网络错误', res.statusCode)
+      Taro.request(param).then(res=>{
+        if (res.statusCode === 200) {
+          resolve(res.data)
+        } else {
+          console.log('网络错误', res.statusCode)
+          reject()
+        }
+      }).catch(err=>{
         reject()
-      }
+      })
     })
   }
 }

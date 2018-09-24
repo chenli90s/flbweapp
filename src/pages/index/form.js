@@ -27,8 +27,11 @@ class Form extends Component{
     super(props)
     let title = this.$router.params.name||''
     Taro.setNavigationBarTitle({title})
+    let nows = new Date()
+    let dateNow = `${nows.getFullYear().toString()}-${(nows.getMonth()+1).toString()}-${nows.getDate().toString()}`
+    console.log(dateNow)
     this.state = {
-      dateSel: new Date().toLocaleDateString().split('/').join('-'),
+      dateSel: dateNow,
       timeSel: new Date().toTimeString().split(' ')[0],
       weight: null,
       type: null,
@@ -48,7 +51,7 @@ class Form extends Component{
     let d = new Date(date)
     let year = d.getFullYear()
     let mon = d.getMonth()+1
-    let day = d.getDay()
+    let day = d.getDate()
     let dat = `${year.toString()}-${mon.toString()}-${day.toString()}`
     console.log(dat)
     this.setState({dateSel: dat})
@@ -90,7 +93,10 @@ class Form extends Component{
     }
   }
 
+  isSubmit = false
+
   submit = async ()=>{
+
     console.log(this.state.dateSel, this.state.timeSel)
     const {address} = this.props.addresser;
     if(!address.addr){
@@ -117,9 +123,18 @@ class Form extends Component{
       smtime: this.state.dateSel+' '+this.state.timeSel,
       name: this.state.addre.name
     };
-    await http.get('/place_order', params)
-    // 跳转
-    Taro.navigateTo({url:'/pages/user/myorder'})
+    if(this.isSubmit){
+      return
+    }else {
+      this.isSubmit = true
+    }
+    http.get('/place_order', params).then(res=>{
+      // 跳转
+      Taro.navigateTo({url:'/pages/user/myorder'})
+    }).catch(err=>{
+      wx.showToast({title:'网络错误，请稍等会下单！！', duration: 1500, icon: 'none'})
+    })
+    this.isSubmit = false
   }
 
   render(){

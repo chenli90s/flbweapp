@@ -38,7 +38,9 @@ class SubmitProd extends Component{
     this.setState({addr: e.detail.detail.value})
   }
 
+  isSubmit = false
   async submit(){
+
     if(!this.state.phone||!this.state.addr){
       wx.showToast({title:'地址不能为空', duration: 1500, icon: 'none'});
       return
@@ -49,8 +51,14 @@ class SubmitProd extends Component{
       wx.showToast({title:'管理员和接单员不能下单', duration: 1500, icon: 'none'});
       return
     }
+    if(this.isSubmit){
+      return
+    }else {
+      this.isSubmit = true
+    }
     let res = await http.get('/goods_duihuan', {...this.state, unionid:id});
     console.log(res)
+    this.isSubmit = false
     wx.navigateBack()
   }
   render(){

@@ -17,8 +17,8 @@ class EditAddre extends Component{
 
 
   state = {
-    pice: '',
-    weight: '',
+    pice: '1.9',
+    weight: '1.21',
     pices: ''
   };
 
@@ -27,7 +27,10 @@ class EditAddre extends Component{
 
   };
 
+  isSubmit = false
+
   submit = async ()=>{
+
     let id = Taro.getStorageSync('id');
     let order_id = this.$router.params.id
     let {weight, pices, pice} = this.state
@@ -35,7 +38,13 @@ class EditAddre extends Component{
       wx.showToast({title:'单价和重量不能为空,不能出现汉字', duration: 1500, icon: 'none'})
       return
     }
-    await http.get('/complete_order', {unionid: id, order_id, pices, real_weight: weight})
+    if(this.isSubmit){
+      return
+    }else {
+      this.isSubmit = true
+    }
+    await http.get('/complete_order', {unionid: id, order_id, money: pices, real_weight: weight})
+    this.isSubmit = false
     wx.navigateBack()
   };
 

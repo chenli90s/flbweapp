@@ -31,10 +31,18 @@ class GetOrder extends Component{
     this.reload()
   }
 
+
+  isSubmit = false
   async get(val){
+    if(this.isSubmit){
+      return
+    }else {
+      this.isSubmit = true
+    }
     let id = Taro.getStorageSync('id');
     await http.get('/recv_order', {id: val.id, unionid: id})
     wx.showToast({title:'接单成功', duration: 1500, icon: 'none'})
+    this.isSubmit = false
     this.reload()
   }
 

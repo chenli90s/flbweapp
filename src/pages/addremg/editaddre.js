@@ -38,7 +38,10 @@ class EditAddre extends Component{
 
   };
 
+
+  isSubmit = false
   submit = async ()=>{
+
     let { editaddress } = this.props.addresser;
     let id = Taro.getStorageSync('id');
     let {phone, name, addr} = this.state;
@@ -46,12 +49,17 @@ class EditAddre extends Component{
       wx.showToast({title:'填写内容不能为空', duration: 1500, icon: 'none'})
       return
     }
+    if(this.isSubmit){
+      return
+    }else {
+      this.isSubmit = true
+    }
     if(editaddress){
       await http.get('/xiu_addr', {unionid: id, ...this.state})
     }else {
       await http.get('/add_addr', {unionid: id, ...this.state})
     }
-
+    this.isSubmit = false
     wx.navigateBack()
   };
 
