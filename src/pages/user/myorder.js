@@ -18,6 +18,7 @@ class MyOrder extends Component {
       "i-button": "../../iview/button/index",
       "i-modal": "../../iview/modal/index",
       "i-input": "../../iview/input/index",
+      "i-rate": "../../iview/rate/index",
     }
   }
 
@@ -66,7 +67,8 @@ class MyOrder extends Component {
     load: false,
     showcommon: false,
     currentid: null,
-    common: ''
+    common: '',
+    starts: 0
   }
 
   handleChange = (e) => {
@@ -85,7 +87,7 @@ class MyOrder extends Component {
 
   async ok(){
     let res = await http.get('/add_common', {common: this.state.common, id: this.state.currentid})
-    console.log(res)
+    // console.log(res)
     await this.reload()
     this.setState({showcommon: false})
   }
@@ -99,8 +101,15 @@ class MyOrder extends Component {
     this.setState({common: val.detail.detail.value})
   }
 
+  changeStart(val){
+    // console.log(val)
+    let starts = val.detail.index
+    let common = starts==2?'满意':starts==1?'差评':starts==3?'非常满意':'未评价'
+    this.setState({starts: val.detail.index, common})
+  }
+
   render() {
-    let {current, load, data, showcommon, common} = this.state;
+    let {current, load, data, showcommon, common, starts} = this.state;
     let list = data[current];
     return (
       <View className='myorder'>
@@ -144,10 +153,17 @@ class MyOrder extends Component {
         ))}
         <i-load-more loading={load}></i-load-more>
         <i-modal title='评价' visible={showcommon} onOk={this.ok} onCancel={this.quit}>
-          <i-input value={common} type='textarea'
-            onChange={this.oncommon}
-            placeholder='' maxlength='50'
-          />
+          {/*<i-input value={common} type='textarea'*/}
+            {/*onChange={this.oncommon}*/}
+            {/*placeholder='' maxlength='50'*/}
+          {/*/>*/}
+          <i-rate
+            onChange={this.changeStart}
+            size="40"
+            count={3}
+            value={starts}>
+          </i-rate>
+          <View>{starts==2?'满意':starts==1?'差评':starts==3?'非常满意':''}</View>
         </i-modal>
       </View>
     )

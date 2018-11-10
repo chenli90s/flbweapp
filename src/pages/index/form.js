@@ -26,6 +26,7 @@ class Form extends Component{
   constructor(props){
     super(props)
     let title = this.$router.params.name||''
+    let id = this.$router.params.id||''
     Taro.setNavigationBarTitle({title})
     let nows = new Date()
     let dateNow = `${nows.getFullYear().toString()}-${(nows.getMonth()+1).toString()}-${nows.getDate().toString()}`
@@ -36,7 +37,8 @@ class Form extends Component{
       weight: null,
       type: null,
       isGive: false,
-      addre: null
+      addre: null,
+      id
     }
   }
 
@@ -138,7 +140,7 @@ class Form extends Component{
   }
 
   render(){
-    const {dateSel, timeSel, type, weight, isGive} = this.state
+    const {dateSel, timeSel, type, weight, isGive, id} = this.state
     const {address} = this.props.addresser;
     return (
       <View>
@@ -151,7 +153,9 @@ class Form extends Component{
             <i-cell title='取货时间' value={timeSel} ></i-cell>
           </Picker>
           <i-input value={weight} type='number' right onChange={this.onWeight} title='预估重量' placeholder='单位（斤）' />
-          <i-input value={type} right title='类型' onChange={this.onType} placeholder='例如：纸箱，报纸，书本' />
+          {id==0&&<i-input value={type} right title='类型' onChange={this.onType} placeholder='例如：纸箱，报纸，书本' />}
+          {id==1&&<i-input value={type} right title='类型' onChange={this.onType} placeholder='例如：废旧饮料瓶' />}
+          {id==2&&<i-input value={type} right title='类型' onChange={this.onType} placeholder='例如：废旧衣服' />}
           <i-cell title='是否赠送'>
             <i-switch value={isGive} onChange={this.switchChange} slot='footer'>
               <i-icon type='right' slot='open'></i-icon>

@@ -1,8 +1,9 @@
 import Taro, {Component} from '@tarojs/taro'
 import {View, Swiper, SwiperItem, Image, Text} from '@tarojs/components'
-import one from '../../img/1.jpg'
+// import one from '../../img/1.jpg'
 import two from '../../img/2.jpg'
-import three from '../../img/3.jpg'
+// import three from '../../img/3.jpg'
+import news from '../../img/news.jpg'
 import Ac from '../../icon/1.svg'
 import Bc from '../../icon/2.svg'
 import Cc from '../../icon/3.svg'
@@ -41,13 +42,13 @@ class Index extends Component {
       id: 1
     },
     {
-      name: '废金属',
-      icon: Cc,
+      name: '废旧衣服',
+      icon: Dc,
       id: 2
     },
     {
-      name: '废纺织',
-      icon: Dc,
+      name: '废金属',
+      icon: Cc,
       id: 3
     },
     {
@@ -69,15 +70,15 @@ class Index extends Component {
       duration: 500,
       interval: 5000,
       isCircular: false,
-      isAutoplay: true,
-      hasIndicatorDots: true,
+      isAutoplay: false,
+      hasIndicatorDots: false,
       items: this.item,
       visible: false
     }
   }
 
   goToComponent = (value) => {
-    if (value.id > 0) {
+    if (value.id > 2) {
 // eslint-disable-next-line no-undef
       wx.showToast({title: '此功能暂未开放', duration: 1500, icon: 'none'})
       return
@@ -153,7 +154,7 @@ class Index extends Component {
             <i-grid-item key={value.id}>
               <View onClick={this.goToComponent.bind(this, value)}>
                 <i-grid-icon>
-                  <image src={value.icon}/>
+                  <Image src={value.icon}/>
                 </i-grid-icon>
                 <i-grid-label>{value.name}</i-grid-label>
               </View>
@@ -171,29 +172,30 @@ class Index extends Component {
     return (
       <View className='i-prod'>
         <View className='swip-index'>
-          <Swiper
-            slideMult='10'
-            indicatorColor='#999'
-            indicatorActiveColor='#333'
-            current={current}
-            duration={duration}
-            interval={interval}
-            circular={isCircular}
-            autoplay={isAutoplay}
-            indicatorDots={hasIndicatorDots}
-            preMargin='20'
-            style='height: 240px;'
-          >
-            <SwiperItem>
-              <Image src={one} style='width: 100%;'></Image>
-            </SwiperItem>
-            <SwiperItem>
-              <Image src={two} style='width: 100%;'></Image>
-            </SwiperItem>
-            <SwiperItem>
-              <Image src={three} style='width: 100%;'></Image>
-            </SwiperItem>
-          </Swiper>
+          {/*<Swiper*/}
+            {/*slideMult='10'*/}
+            {/*indicatorColor='#999'*/}
+            {/*indicatorActiveColor='#333'*/}
+            {/*current={current}*/}
+            {/*duration={duration}*/}
+            {/*interval={interval}*/}
+            {/*circular={isCircular}*/}
+            {/*autoplay={isAutoplay}*/}
+            {/*indicatorDots={hasIndicatorDots}*/}
+            {/*preMargin='20'*/}
+            {/*style='height: 240px;'*/}
+          {/*>*/}
+            {/*<SwiperItem>*/}
+              {/*<Image src={one} style='width: 100%;'></Image>*/}
+            {/*</SwiperItem>*/}
+            {/*<SwiperItem>*/}
+              {/*<Image src={two} style='width: 100%;'></Image>*/}
+            {/*</SwiperItem>*/}
+            {/*<SwiperItem>*/}
+              {/*<Image src={news} style='width: 100%;'></Image>*/}
+            {/*</SwiperItem>*/}
+          {/*</Swiper>*/}
+          <Image src={news} style='width: 100%;'></Image>
         </View>
         <i-grid>
           {guid}
