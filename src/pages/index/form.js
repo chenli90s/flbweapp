@@ -3,6 +3,8 @@ import { connect } from '@tarojs/redux'
 import {View, Picker} from '@tarojs/components'
 import http from '../../utils/http'
 import { setaddress } from "../../actions/address";
+import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui"
+
 
 const store = ({address}) => ({addresser:address});
 const action = (dispatch) =>({setaddress(payload){dispatch(setaddress(payload))}})
@@ -38,7 +40,8 @@ class Form extends Component{
       type: null,
       isGive: false,
       addre: null,
-      id
+      id,
+      isSubmit: false,
     }
   }
 
@@ -98,7 +101,7 @@ class Form extends Component{
   isSubmit = false
 
   submit = async ()=>{
-
+    this.setState({isSubmit: true})
     // console.log(this.state.dateSel, this.state.timeSel)
     const {address} = this.props.addresser;
     if(!address.addr){
@@ -137,10 +140,11 @@ class Form extends Component{
       wx.showToast({title:'网络错误，请稍等会下单！！', duration: 1500, icon: 'none'})
     })
     this.isSubmit = false
+    this.setState({isSubmit: false})
   }
 
   render(){
-    const {dateSel, timeSel, type, weight, isGive, id} = this.state
+    const {dateSel, timeSel, type, weight, isGive, id, isSubmit} = this.state
     const {address} = this.props.addresser;
     return (
       <View>
@@ -164,6 +168,12 @@ class Form extends Component{
           </i-cell>
         </i-cell-group>
         <i-button onClick={this.submit} type='success'>提交</i-button>
+        <AtModal isOpened={isSubmit}>
+          <AtModalHeader>提交中</AtModalHeader>
+          <AtModalContent>
+            正在提交,请稍后.....
+          </AtModalContent>
+        </AtModal>
       </View>
     )
   }
