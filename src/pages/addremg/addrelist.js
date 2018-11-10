@@ -79,7 +79,7 @@ class addrelist extends Component{
       <View>
         <i-button onClick={this.add} type='success' long='true'>添加地址</i-button>
         {list.map((value, index) => (
-          <i-card title={`联系人: ${value.name}`} key={index}>
+          <i-card title={`联系人: ${value.name}`} taroKey={index}>
             <view slot='content' className='i-contents'><i-icon type='mobilephone_fill' />{`联系电话：${value.phone}`}</view>
             <view slot='content' className='i-contents'><i-icon type='flag_fill' />{`地址: ${value.addr}`}</view>
             <view slot='content'>

@@ -54,7 +54,7 @@ class ProdOrder extends Component {
     return (
       <View>
         {data&&data.map((value, id) => (
-          <i-card title='' key={id}>
+          <i-card title='' taroKey={id}>
             <view slot='content' className='i-contents'>
               <i-icon type='mobilephone_fill' />
               {`联系电话：${value.phone}`}</view>

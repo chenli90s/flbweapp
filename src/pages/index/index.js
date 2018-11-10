@@ -97,7 +97,7 @@ class Index extends Component {
     updateManager.onCheckForUpdate(function (res) {
     // 请求完新版本信息的回调
 
-      console.log(res)
+      // console.log(res)
       if(res.hasUpdate){
         updateManager.onUpdateReady(function () {
           wx.showModal({
@@ -129,11 +129,11 @@ class Index extends Component {
     // 获取地理位置
     Taro.showShareMenu()
     let location = await Taro.getLocation({type: 'gcj02'})
-    console.log(location)
+    // console.log(location)
     let w = location.latitude.toString()
     let j = location.longitude.toString()
     let user = await api.login(w, j)
-    console.log(user)
+    // console.log(user)
     if (user.status === 600) {
       //  未关注公众号
       this.setState({visible: true})
@@ -149,9 +149,9 @@ class Index extends Component {
     const groups = loda.chunk(items, 3);
     const guid = groups.map((g, index) => {
       return (
-        <i-row key={index}>
+        <i-row taroKey={index}>
           {g.map((value) => (
-            <i-grid-item key={value.id}>
+            <i-grid-item taroKey={value.id}>
               <View onClick={this.goToComponent.bind(this, value)}>
                 <i-grid-icon>
                   <Image src={value.icon}/>

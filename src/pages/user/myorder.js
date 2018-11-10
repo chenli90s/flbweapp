@@ -119,7 +119,7 @@ class MyOrder extends Component {
           <i-tab ikey='succ' title='已完成'></i-tab>
         </i-tabs>
         {list.map(value => (
-          <i-card title='' key={value.id}>
+          <i-card title='' taroKey={value.id}>
             {/*<View slot='content' className='i-contents'>*/}
               {/*<i-icon type='addressbook_fill' />*/}
               {/*{`联系人：${value.name}`}</View>*/}

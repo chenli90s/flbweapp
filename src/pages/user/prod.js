@@ -62,11 +62,11 @@ class Preduct extends Component {
     let group = loda.chunk(list, 2)
     let render = group.map((g, index) => {
       return (
-        <i-row key={index}>
+        <i-row taroKey={index}>
           <i-grid>
           {
             g.map(val => (
-                <i-grid-item key={val.id}>
+                <i-grid-item taroKey={val.id}>
                   {/*<i-grid-icon i-class="i-prod-icon">*/}
                     <image src={`https://www.hlfeilibao.com${val.url}`} className='i-prod-icon' />
                   {/*</i-grid-icon>*/}

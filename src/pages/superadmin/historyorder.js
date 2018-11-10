@@ -40,7 +40,7 @@ class GetOrder extends Component{
     return (
       <View>
         {lists.map(value => (
-          <i-card title='' key={value.id}>
+          <i-card title='' taroKey={value.id}>
             <view slot='content' className='i-contents'>
               <i-icon type='group_fill' />
               {`姓名: ${value.name}`}</view>

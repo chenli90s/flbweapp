@@ -30,7 +30,7 @@ class Form extends Component{
     Taro.setNavigationBarTitle({title})
     let nows = new Date()
     let dateNow = `${nows.getFullYear().toString()}-${(nows.getMonth()+1).toString()}-${nows.getDate().toString()}`
-    console.log(dateNow)
+    // console.log(dateNow)
     this.state = {
       dateSel: dateNow,
       timeSel: new Date().toTimeString().split(' ')[0],
@@ -79,7 +79,7 @@ class Form extends Component{
   }
 
   componentDidMount = async ()=>{
-    console.log(this.props)
+    // console.log(this.props)
     let id = Taro.getStorageSync('id')
     let address = await http.get('/show_addr?unionid=' + id,);
     // console.log(address)
@@ -99,7 +99,7 @@ class Form extends Component{
 
   submit = async ()=>{
 
-    console.log(this.state.dateSel, this.state.timeSel)
+    // console.log(this.state.dateSel, this.state.timeSel)
     const {address} = this.props.addresser;
     if(!address.addr){
       wx.showToast({title:'地址不能为空', duration: 1500, icon: 'none'})
