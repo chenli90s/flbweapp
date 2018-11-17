@@ -1,6 +1,7 @@
 import Taro, {Component} from '@tarojs/taro'
 import {View} from '@tarojs/components'
 import http from '../../utils/http'
+import {AtInput} from 'taro-ui'
 
 
 
@@ -17,8 +18,8 @@ class EditAddre extends Component{
 
 
   state = {
-    pice: '1.9',
-    weight: '1.21',
+    pice: '',
+    weight: '',
     pices: ''
   };
 
@@ -45,12 +46,13 @@ class EditAddre extends Component{
     }
     await http.get('/complete_order', {unionid: id, order_id, money: pices, real_weight: weight})
     this.isSubmit = false
-    wx.navigateBack()
+    Taro.redirectTo({url:`/pages/admin/history`})
   };
 
   onname = (e)=>{
     let { weight } = this.state
-    let val = e.detail.detail.value
+    // let val = e.detail.detail.value
+    let val = e
     weight = parseFloat(weight)
     let fl = val.split('.')
     if(fl.length>1&&fl[1]){
@@ -71,7 +73,8 @@ class EditAddre extends Component{
 
   onphone = (e)=>{
     let { pice } = this.state
-    let val = e.detail.detail.value
+    // let val = e.detail.detail.value
+    let val = e
     pice = parseFloat(pice)
     let fl = val.split('.')
     if(fl.length>1&&fl[1]) {
@@ -95,9 +98,12 @@ class EditAddre extends Component{
     let { pice, weight, pices} = this.state
     return (
       <View>
-        <i-input value={pice} title='单价' autofocus placeholder='请输入单价' onChange={this.onname} />
-        <i-input value={weight} onChange={this.onphone} title='重量' placeholder='请输入重量' />
-        <i-input value={pices} onChange={this.onaddr} title='价格' maxlength='50' />
+        {/*<i-input value={pice} title='单价' autofocus placeholder='请输入单价' onChange={this.onname} />*/}
+        <AtInput title={'单价'} value={pice} autoFocus={true} placeholder={'请输入单价'} onChange={this.onname} type={'text'}/>
+        {/*<i-input value={weight} onChange={this.onphone} title='重量' placeholder='请输入重量' />*/}
+        <AtInput value={weight} onChange={this.onphone} title='重量' placeholder='请输入重量' type={'text'} />
+        {/*<i-input value={pices} onChange={this.onaddr} title='价格' maxlength='50' />*/}
+        <AtInput value={pices}  title='价格' maxlength={'50'} />
         <i-button onClick={this.submit} type='success'>提交</i-button>
       </View>
 

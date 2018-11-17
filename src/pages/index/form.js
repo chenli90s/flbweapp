@@ -133,14 +133,19 @@ class Form extends Component{
     }else {
       this.isSubmit = true
     }
+    let _this = this
     http.get('/place_order', params).then(res=>{
       // 跳转
+      _this.isSubmit = false
+      _this.setState({isSubmit: false})
       Taro.navigateTo({url:'/pages/user/myorder'})
     }).catch(err=>{
+      _this.isSubmit = false
+      _this.setState({isSubmit: false})
       wx.showToast({title:'网络错误，请稍等会下单！！', duration: 1500, icon: 'none'})
     })
-    this.isSubmit = false
-    this.setState({isSubmit: false})
+
+
   }
 
   render(){
@@ -168,7 +173,7 @@ class Form extends Component{
           </i-cell>
         </i-cell-group>
         <i-button onClick={this.submit} type='success'>提交</i-button>
-        <AtModal isOpened={isSubmit}>
+        <AtModal isOpened={isSubmit} onClose={()=>{}} onCancel={()=>{}}>
           <AtModalHeader>提交中</AtModalHeader>
           <AtModalContent>
             正在提交,请稍后.....

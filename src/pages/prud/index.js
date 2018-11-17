@@ -1,5 +1,5 @@
 import Taro, {Component} from '@tarojs/taro'
-import {View, OpenData, Text} from '@tarojs/components'
+import {View, OpenData, Text, Image} from '@tarojs/components'
 import http from '../../utils/http'
 import loda from 'lodash/array'
 
@@ -74,9 +74,11 @@ class Preduct extends Component {
           {
             g.map(val => (
                 <i-grid-item taroKey={val.id}>
-                  {/*<i-grid-icon i-class="i-prod-icon">*/}
-                    <image src={`https://www.hlfeilibao.com${val.url}`} className='i-prod-icon' />
-                  {/*</i-grid-icon>*/}
+                  <View i-class="i-prod-icon">
+                    <Image src={`https://www.hlfeilibao.com${val.url}`}
+                      style={{width: "100%", height: '150px'}}
+                    />
+                  </View>
                   <i-grid-label>{val.goods_name}</i-grid-label>
                   <i-grid-label>{`积分： ${val.need_int}`}</i-grid-label>
                   <i-grid-label>

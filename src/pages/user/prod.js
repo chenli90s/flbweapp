@@ -1,5 +1,5 @@
 import Taro, {Component} from '@tarojs/taro'
-import {View, OpenData, Text} from '@tarojs/components'
+import {View, OpenData, Text, Image} from '@tarojs/components'
 import http from '../../utils/http'
 import loda from 'lodash/array'
 
@@ -40,19 +40,26 @@ class Preduct extends Component {
 
   componentDidHide() {
   }
-
+  isSubmit = false
   async submit(val){
+
     if(this.state.score<val.need_int){
       wx.showToast({title:'积分不够', duration: 1500, icon: 'none'})
       return
     }
     let id = Taro.getStorageSync('id')
+    //todo : 提交时解开注释
     let role = await http.get('/per_info', {unionid: id})
     if(role.role>1){
       wx.showToast({title:'管理员，接单员无法提交', duration: 1500, icon: 'none'})
       return
     }
 
+    // if(this.isSubmit){
+    //   return
+    // }else {
+    //   this.isSubmit = true
+    // }
     Taro.navigateTo({url:`/pages/prud/submitprod?point=${val.need_int}&goodid=${val.id}`})
 
   }
@@ -64,20 +71,22 @@ class Preduct extends Component {
       return (
         <i-row taroKey={index}>
           <i-grid>
-          {
-            g.map(val => (
+            {
+              g.map(val => (
                 <i-grid-item taroKey={val.id}>
-                  {/*<i-grid-icon i-class="i-prod-icon">*/}
-                    <image src={`https://www.hlfeilibao.com${val.url}`} className='i-prod-icon' />
-                  {/*</i-grid-icon>*/}
+                  <View i-class="i-prod-icon">
+                    <Image src={`https://www.hlfeilibao.com${val.url}`}
+                           style={{width: "100%", height: '150px'}}
+                    />
+                  </View>
                   <i-grid-label>{val.goods_name}</i-grid-label>
                   <i-grid-label>{`积分： ${val.need_int}`}</i-grid-label>
                   <i-grid-label>
                     <i-button size='small' type='success' inline shape='circle' onClick={this.submit.bind(this,val)}>兑换</i-button>
                   </i-grid-label>
                 </i-grid-item>
-            ))
-          }
+              ))
+            }
           </i-grid>
         </i-row>
       )

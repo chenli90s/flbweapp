@@ -24,6 +24,7 @@ class MyOrder extends Component{
     let id = Taro.getStorageSync('id');
     let res = await http.get('/my_order', {unionid: id});
     if(res.status===600){
+      this.setState({lists: []})
       return
     }
     this.setState({lists: res.res})
@@ -31,7 +32,10 @@ class MyOrder extends Component{
 
   async componentDidShow() {
     this.reload()
+    console.log('------')
   }
+
+
 
   async get(val){
     //

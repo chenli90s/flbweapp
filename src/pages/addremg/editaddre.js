@@ -3,6 +3,7 @@ import {View} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import http from '../../utils/http'
 import './index.css'
+import {AtListItem, AtList} from 'taro-ui'
 
 
 @connect(({ address })=>({addresser: address}), ()=>({}))
@@ -75,6 +76,8 @@ class EditAddre extends Component{
     this.setState({addr: e.detail.detail.value})
   }
 
+  toMap = ()=>{Taro.navigateTo({url:'/pages/addremg/map'})}
+
   render(){
     let { editaddress } = this.props.addresser
     let title = editaddress? '更新地址':'添加地址'
@@ -84,6 +87,20 @@ class EditAddre extends Component{
           <i-input value={this.state.name} title='收货人' autofocus placeholder='名字' onChange={this.onname} />
           <i-input value={this.state.phone} onChange={this.onphone} type='number' title='联系电话' placeholder='请输入手机号' />
           <i-input value={this.state.addr} onChange={this.onaddr} type='textarea' title='详细地址' placeholder='请输入详细地址(最多50字)' maxlength='50' />
+          {/*<AtList>*/}
+            {/*<AtListItem*/}
+              {/*title='详细地址'*/}
+              {/*note='描述信息'*/}
+              {/*// extraText='详细信息'*/}
+              {/*arrow='right'*/}
+              {/*onClick={this.toMap}*/}
+              {/*iconInfo={{*/}
+                {/*size: 25,*/}
+                {/*color: '#19be6b',*/}
+                {/*value: 'map-pin',*/}
+              {/*}}*/}
+            {/*/>*/}
+          {/*</AtList>*/}
         </i-panel>
         <i-button onClick={this.submit} type='success'>提交</i-button>
       </View>

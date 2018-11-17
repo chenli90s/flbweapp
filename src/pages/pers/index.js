@@ -38,9 +38,13 @@ class Persion extends Component {
     if(role===1){
         view = (<i-cell-group>
           <i-cell title='我的订单' is-link url='/pages/user/myorder' />
+          <i-cell title='我的地址' is-link url='/pages/user/addrelist' />
+          <i-cell title='我的钱包' is-link url='/pages/user/wallet' />
           <i-cell title='我的积分' is-link url='/pages/user/prod'></i-cell>
           <i-cell title='商城订单' is-link url='/pages/user/prodorder'></i-cell>
           <i-cell title='加入我们' is-link url='/pages/user/join'/>
+          <i-cell title='关于我们' is-link url='/pages/user/about'/>
+          <i-cell title='联系我们' is-link url='/pages/user/contact'/>
         </i-cell-group>)
       }
 

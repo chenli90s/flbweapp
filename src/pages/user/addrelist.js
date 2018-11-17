@@ -4,6 +4,8 @@ import { connect} from '@tarojs/redux'
 import http from '../../utils/http'
 import './index.css'
 import {editaddress, setaddress} from '../../actions/address'
+import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui"
+
 
 const store = ({address})=>({addresser: address})
 const action = (dispatch)=>({
@@ -31,7 +33,8 @@ class addrelist extends Component{
 
   state = {
     list : [],
-    load: false
+    load: false,
+    isloading: false,
   }
 
   // componentDidMount = async ()=>{
@@ -66,14 +69,22 @@ class addrelist extends Component{
     this.setState({list: address.res, load: false})
   }
 
-  selected = (item)=>{
-    this.props.setaddress(item);
-    // Taro.navigateTo('/pages/index/form')
-    wx.navigateBack()
+  delete = async (item)=>{
+    // todo 删除接口
+    // console.log(item)
+    this.setState({isloding: true})
+    await http.get('/del_addr', {id: item.id})
+    let id = Taro.getStorageSync('id')
+    let address = await http.get('/show_addr?unionid=' + id,);
+    if(address.status===600){
+      this.setState({isloding: false, list: []})
+      return
+    }
+    this.setState({list: address.res, isloding: false})
   };
 
   render(){
-    const {list, load } = this.state
+    const {list, load, isloading } = this.state
     // console.log(list)
     return (
       <View>
@@ -84,12 +95,18 @@ class addrelist extends Component{
             <view slot='content' className='i-contents'><i-icon type='mobilephone_fill' />{`联系电话：${value.phone}`}</view>
             <view slot='content' className='i-contents'><i-icon type='flag_fill' />{`地址: ${value.addr}`}</view>
             <view slot='content'>
-              <i-button inline onClick={this.selected.bind(this, value)} type='success' size='small' shape='circle'>选择</i-button>
               <i-button inline onClick={this.edit.bind(this, value)} type='success' size='small' shape='circle'>编辑</i-button>
+              <i-button inline onClick={this.delete.bind(this, value)} type='error' size='small' shape='circle'>删除</i-button>
             </view>
           </i-card>
         ))}
         <i-load-more loading={load}></i-load-more>
+        <AtModal isOpened={isloading}>
+          <AtModalHeader>提交中</AtModalHeader>
+          <AtModalContent>
+            正在提交,请稍后.....
+          </AtModalContent>
+        </AtModal>
       </View>
     )
   }

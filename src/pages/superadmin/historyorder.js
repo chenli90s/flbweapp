@@ -25,7 +25,7 @@ class GetOrder extends Component{
     let id = Taro.getStorageSync('id');
     this.setState({isload: true})
     let res = await http.get('/super_history', {unionid: id})
-    let lists = res.res.slice(0,500);
+    let lists = res.res.slice(0,50);
     this.setState({lists, isload: false})
   }
 
