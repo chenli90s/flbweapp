@@ -13,12 +13,18 @@ class About extends Component {
     return (
       <View style={{margin: '15px'}}>
         <View style={{margin: '15px'}}>
-          <Text>公司地址：河南省新密市创新科技园</Text>
+          <Text>联系方式:0371-86579990     (早9点晚6点)
+          </Text>
         </View>
         <View style={{margin: '15px'}}>
-          <Text>合作热线：0371—86579990</Text></View>
+          <Text>工作邮箱：feilibao@163.com
+          </Text></View>
         <View style={{margin: '15px'}}>
-        <Text>邮箱：feilibao@163.com</Text></View>
+        <Text>公司地址：河南省中科（郑州）创新园
+        </Text></View>
+        <View style={{margin: '15px'}}>
+        <Text>微信联系：可在平台留言留下联系方式，说明意向
+        </Text></View>
       </View>
     )
   }
