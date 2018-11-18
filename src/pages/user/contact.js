@@ -4,6 +4,11 @@ import Logo from '../../img/logo.jpeg'
 
 
 class About extends Component {
+
+  config = {
+    navigationBarTitleText: '联系我们',
+  }
+
   render() {
     return (
       <View style={{margin: '15px'}}>

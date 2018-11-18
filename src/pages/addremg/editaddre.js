@@ -1,9 +1,11 @@
 import Taro, {Component} from '@tarojs/taro'
-import {View} from '@tarojs/components'
+import {View, Image} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import http from '../../utils/http'
 import './index.css'
-import {AtListItem, AtList} from 'taro-ui'
+import {AtListItem, AtList, AtInput} from 'taro-ui'
+import Loc from '../../icon/loc.png'
+
 
 
 @connect(({ address })=>({addresser: address}), ()=>({}))
@@ -25,6 +27,7 @@ class EditAddre extends Component{
   state = {
     phone: '',
     name: '',
+    // detail: '',
     addr: ''
   };
 
@@ -55,6 +58,7 @@ class EditAddre extends Component{
     }else {
       this.isSubmit = true
     }
+    // this.state.addr = this.state.detail+" - "+this.state.addr;
     if(editaddress){
       await http.get('/xiu_addr', {unionid: id, ...this.state})
     }else {
@@ -65,18 +69,36 @@ class EditAddre extends Component{
   };
 
   onname = (e)=>{
-    this.setState({name: e.detail.detail.value})
+    // this.setState({name: e.detail.detail.value})
+    this.setState({name: e})
   }
 
   onphone = (e)=>{
-    this.setState({phone: e.detail.detail.value})
+    // this.setState({phone: e.detail.detail.value})
+    this.setState({phone: e})
   }
 
   onaddr = (e)=>{
-    this.setState({addr: e.detail.detail.value})
+    // this.setState({addr: e.detail.detail.value})
+    this.setState({addr: e})
   }
 
-  toMap = ()=>{Taro.navigateTo({url:'/pages/addremg/map'})}
+  toMap = ()=>{
+    // Taro.navigateTo({url:'/pages/addremg/map'})
+    let _ = this
+    wx.chooseLocation({
+      success(e){
+        console.log(e, 's', _)
+        _.setState({addr:e.address})
+      },
+      fail(e){
+        console.log(e, 'f')
+      },
+      complete(e){
+        console.log(e, 'c')
+      }
+    })
+  }
 
   render(){
     let { editaddress } = this.props.addresser
@@ -84,23 +106,30 @@ class EditAddre extends Component{
     return (
       <View>
         <i-panel title={title}>
-          <i-input value={this.state.name} title='收货人' autofocus placeholder='名字' onChange={this.onname} />
-          <i-input value={this.state.phone} onChange={this.onphone} type='number' title='联系电话' placeholder='请输入手机号' />
-          <i-input value={this.state.addr} onChange={this.onaddr} type='textarea' title='详细地址' placeholder='请输入详细地址(最多50字)' maxlength='50' />
+          <AtInput value={this.state.name} title='收货人' autofocus placeholder='名字' onChange={this.onname} />
+          <AtInput value={this.state.phone} onChange={this.onphone} type='number' title='联系电话' placeholder='请输入手机号' />
           {/*<AtList>*/}
-            {/*<AtListItem*/}
-              {/*title='详细地址'*/}
-              {/*note='描述信息'*/}
-              {/*// extraText='详细信息'*/}
-              {/*arrow='right'*/}
-              {/*onClick={this.toMap}*/}
-              {/*iconInfo={{*/}
-                {/*size: 25,*/}
-                {/*color: '#19be6b',*/}
-                {/*value: 'map-pin',*/}
-              {/*}}*/}
-            {/*/>*/}
-          {/*</AtList>*/}
+          {/*<AtListItem*/}
+            {/*title='定位地址'*/}
+            {/*note={this.state.detail}*/}
+            {/*// extraText='详细信息'*/}
+            {/*arrow='right'*/}
+            {/*onClick={this.toMap}*/}
+            {/*iconInfo={{*/}
+              {/*size: 25,*/}
+              {/*color: '#19be6b',*/}
+              {/*value: 'map-pin',*/}
+            {/*}}*/}
+          {/*/>*/}
+        {/*</AtList>*/}
+          <AtInput value={this.state.addr}
+                   onChange={this.onaddr}
+                   type='textarea'
+                   title='详细地址'
+                   placeholder='请输入详细地址,几栋几号'
+                   maxlength='50'>
+            <Image src={Loc} style={{width:'25px'}} onClick={this.toMap}/>
+          </AtInput>
         </i-panel>
         <i-button onClick={this.submit} type='success'>提交</i-button>
       </View>

@@ -173,7 +173,7 @@ class Form extends Component{
           </i-cell>
         </i-cell-group>
         <i-button onClick={this.submit} type='success'>提交</i-button>
-        <AtModal isOpened={isSubmit} onClose={()=>{}} onCancel={()=>{}}>
+        <AtModal isOpened={isSubmit}>
           <AtModalHeader>提交中</AtModalHeader>
           <AtModalContent>
             正在提交,请稍后.....

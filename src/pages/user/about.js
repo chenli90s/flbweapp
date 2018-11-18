@@ -4,6 +4,11 @@ import Logo from '../../img/logo.jpeg'
 
 
 class About extends Component {
+
+  config = {
+    navigationBarTitleText: '关于我们',
+  }
+
   render() {
     return (
       <View>

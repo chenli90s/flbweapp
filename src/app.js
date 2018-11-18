@@ -23,7 +23,7 @@ class App extends Component {
       'pages/pers/index',
       'pages/addremg/addrelist',
       'pages/addremg/editaddre',
-      'pages/addremg/map',
+      // 'pages/addremg/map',
       'pages/user/myorder',
       'pages/user/prodorder',
       'pages/user/join',

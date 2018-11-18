@@ -1,6 +1,6 @@
 import Taro, {Component} from '@tarojs/taro'
 import {View, Map} from '@tarojs/components'
-import {AtSearchBar} from 'taro-ui'
+import {AtSearchBar, AtButton} from 'taro-ui'
 import Loc from '../../icon/loc.png'
 
 
@@ -40,10 +40,18 @@ class AddreMap extends Component {
 
   }
 
+  onSelect = ()=>{
+    // console.log(e)
+    wx.chooseLocation((e)=>{
+      console.log(e)
+    }, )
+  }
+
   render() {
     let {latitude, longitude, markers, value} = this.state
     return (
       <View>
+        <AtButton type={'primary'} onClick={this.onSelect} >chioce</AtButton>
         <Map
           style={styles.map} markers={markers}
           latitude={latitude} longitude={longitude} onClick={this.click} scale={18}/>
