@@ -36,6 +36,7 @@ class App extends Component {
       'pages/admin/myorder',
       'pages/admin/calc',
       'pages/admin/history',
+      'pages/admin/modify',
       'pages/superadmin/prudorder',
       'pages/superadmin/manageuser',
       'pages/superadmin/historyorder',

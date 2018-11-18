@@ -151,6 +151,7 @@ class Persion extends Component {
           <i-cell title='我要接单' is-link url='/pages/admin/getorder'/>
           <i-cell title='我的订单' is-link url='/pages/admin/myorder'></i-cell>
           <i-cell title='历史订单' is-link url='/pages/admin/history'></i-cell>
+          <i-cell title='手机号修改' is-link url='/pages/admin/modify'></i-cell>
         </i-cell-group>
       )
     }

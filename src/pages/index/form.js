@@ -13,7 +13,7 @@ const action = (dispatch) =>({setaddress(payload){dispatch(setaddress(payload))}
 class Form extends Component{
 
   config = {
-    navigationBarTitleText: '',
+    navigationBarTitleText: '下单',
     usingComponents: {
       "i-input": "../../iview/input/index",
       "i-panel": "../../iview/panel/index",
