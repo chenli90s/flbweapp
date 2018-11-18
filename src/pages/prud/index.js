@@ -93,15 +93,7 @@ class Preduct extends Component {
     })
     return (
       <View className='i-prod'>
-        <View className='i-userinfo'>
-          <View className='i-avate'>
-            <OpenData type='userAvatarUrl'></OpenData>
-          </View>
-          <View className='i-info-text'>
-            <OpenData type='userNickName' />
-            <Text>积分：{score}</Text>
-          </View>
-        </View>
+
         {render}
       </View>
     )
