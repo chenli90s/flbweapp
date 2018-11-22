@@ -32,6 +32,7 @@ class App extends Component {
       'pages/user/about',
       'pages/user/contact',
       'pages/user/wallet',
+      'pages/chat/index',
       'pages/admin/getorder',
       'pages/admin/myorder',
       'pages/admin/calc',

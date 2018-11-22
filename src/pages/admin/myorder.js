@@ -42,6 +42,12 @@ class MyOrder extends Component{
     // 跳转
     Taro.navigateTo({url:`/pages/admin/calc?id=${val.id}`})
   }
+
+  chat(val){
+    Taro.navigateTo({
+      url: `/pages/chat/index?id=${val.id}&type=2`
+    })
+  }
   
 
   render(){
@@ -75,6 +81,8 @@ class MyOrder extends Component{
               <i-icon type='praise_fill' />
               {`是否赠送: ${value.type?'是':'否'}`}</view>
             <view slot='content'>
+              <i-button inline onClick={this.chat.bind(this, value)} type='success' size='small' shape='circle'>发送消息
+              </i-button>
               <i-button inline onClick={this.get.bind(this, value)} type='warning' size='small' shape='circle'>完成订单
               </i-button>
             </view>

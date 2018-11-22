@@ -108,6 +108,13 @@ class MyOrder extends Component {
     this.setState({starts: val.detail.index, common})
   }
 
+  sendMsg(val){
+    Taro.navigateTo({
+      url: `/pages/chat/index?id=${val.id}&type=1`
+      // url: `/pages/chat/index?id=${val.id}&type=2`
+    })
+  }
+
   render() {
     let {current, load, data, showcommon, common, starts} = this.state;
     let list = data[current];
@@ -143,6 +150,10 @@ class MyOrder extends Component {
               {`评价: ${value.common}`}</view>:''}
             {value.status == '等接单' ? <view slot='content'>
               <i-button inline onClick={this.cancel.bind(this, value)} type='warning' size='small' shape='circle'>取消订单
+              </i-button>
+            </view> : <view></view>}
+            {value.status == '上门中' ? <view slot='content'>
+              <i-button inline onClick={this.sendMsg.bind(this, value)} type='success' size='small' shape='circle'>发送消息
               </i-button>
             </view> : <view></view>}
             {value.status == '已完成'&&!value.common ? <view slot='content'>
