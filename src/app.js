@@ -1,13 +1,14 @@
 import Taro, { Component } from '@tarojs/taro'
 import '@tarojs/async-await'
 import { Provider } from '@tarojs/redux'
-import api from './utils/api'
-
+// import api from './utils/api'
+// import './font/iconfont.css'
 import Index from './pages/index'
 
 import configStore from './store'
 
 import './app.css'
+
 
 const store = configStore()
 

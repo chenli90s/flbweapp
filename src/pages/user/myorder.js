@@ -2,6 +2,7 @@ import Taro, {Component} from '@tarojs/taro'
 import {View} from '@tarojs/components'
 import http from '../../utils/http'
 import './index.css'
+import {AtInput, AtForm, AtBadge, AtButton} from 'taro-ui'
 
 class MyOrder extends Component {
 
@@ -55,6 +56,8 @@ class MyOrder extends Component {
       this.setState({data})
     }
     this.setState({load: false})
+    let unread = await http.get('/no_read', {unionid: id})
+    this.setState({unread: unread.res})
   }
 
   state = {
@@ -68,7 +71,9 @@ class MyOrder extends Component {
     showcommon: false,
     currentid: null,
     common: '',
-    starts: 0
+    starts: 0,
+    comment: '',
+    unread: []
   }
 
   handleChange = (e) => {
@@ -86,7 +91,7 @@ class MyOrder extends Component {
   }
 
   async ok(){
-    let res = await http.get('/add_common', {common: this.state.common, id: this.state.currentid})
+    let res = await http.get('/add_common', {common: this.state.common, id: this.state.currentid, comment:this.state.comment})
     // console.log(res)
     await this.reload()
     this.setState({showcommon: false})
@@ -115,8 +120,12 @@ class MyOrder extends Component {
     })
   }
 
+  comments(comment){
+    this.setState({comment})
+  }
+
   render() {
-    let {current, load, data, showcommon, common, starts} = this.state;
+    let {current, load, data, showcommon, common, starts, unread} = this.state;
     let list = data[current];
     return (
       <View className='myorder'>
@@ -148,14 +157,15 @@ class MyOrder extends Component {
             {value.common?<view slot='content' className='i-contents'>
               <i-icon type='interactive' />
               {`评价: ${value.common}`}</view>:''}
-            {value.status == '等接单' ? <view slot='content'>
+            {value.status == '等接单' ? <view slot='content' >
               <i-button inline onClick={this.cancel.bind(this, value)} type='warning' size='small' shape='circle'>取消订单
               </i-button>
             </view> : <view></view>}
-            {value.status == '上门中' ? <view slot='content'>
-              <i-button inline onClick={this.sendMsg.bind(this, value)} type='success' size='small' shape='circle'>发送消息
-              </i-button>
-            </view> : <view></view>}
+            {value.status == '上门中' ? <View slot='content' style={{marginTop: '15px'}} >
+              <AtBadge value={unread.indexOf(value.id)==-1?'':'有未读消息'}>
+              <AtButton inline onClick={this.sendMsg.bind(this, value)} type='secondary' size='small' shape='circle'>发送消息
+              </AtButton></AtBadge>
+            </View> : <view></view>}
             {value.status == '已完成'&&!value.common ? <view slot='content'>
               <i-button inline onClick={this.common.bind(this, value)} type='warning' size='small' shape='circle'>评价
               </i-button>
@@ -175,6 +185,9 @@ class MyOrder extends Component {
             value={starts}>
           </i-rate>
           <View>{starts==2?'满意':starts==1?'差评':starts==3?'非常满意':''}</View>
+          <AtForm>
+          <AtInput placeholder="请输入不低于15字的评价" value={this.state.comment} onChange={this.comments.bind(this)}/>
+          </AtForm>
         </i-modal>
       </View>
     )

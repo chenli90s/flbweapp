@@ -11,7 +11,9 @@ import av2 from '../../img/av2.png'
 
 class Chat extends Component{
 
-
+  config = {
+    navigationBarTitleText: '聊天',
+  }
   state = {
     lists: [],
     value: '',
@@ -21,12 +23,13 @@ class Chat extends Component{
   reload = async ()=>{
     //id
     let {id} = this.$router.params
+    let unionid = Taro.getStorageSync('id')
     let order_id = id
     // console.log(order_id)
 
 
-    let lists = await http.post('/post_chat', {post_type: 'get_chat', order_id});
-    lists = lists.res
+    let lists = await http.post('/post_chat', {post_type: 'get_chat', order_id, unionid});
+    lists = lists.res.reverse()
     // console.log(lists)
 
     //data
@@ -49,7 +52,7 @@ class Chat extends Component{
 
 
   componentWillUnmount(){
-    console.log('*****')
+    // console.log('*****')
     clearInterval(this.timer)
   }
 
@@ -80,7 +83,7 @@ class Chat extends Component{
     if(type=='1'){
       flag = true
     }
-    console.log(flag)
+    // console.log(flag)
     const items = (
       <ScrollView className={'msg-content'}
                   scrollY
@@ -95,7 +98,7 @@ class Chat extends Component{
           <View key={index} className="msg">
             <View className='chat-time'>
               <Text className='chat-time-text'>
-                {tool(val.time)}
+                {val.time.split('.')[0].split('T').join(' ')}
               </Text>
             </View>
 

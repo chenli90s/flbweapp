@@ -12,7 +12,7 @@ page{
 
 .chat-bottom{
   position: absolute;
-  bottom: 0em;
+  bottom: 0;
   width: 100%;
 }
 
@@ -24,7 +24,6 @@ page{
 .msg{
   margin: 10px 1px;
   box-sizing: border-box;
-
 }
 
 .chat-bottom-btn{

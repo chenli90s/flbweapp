@@ -93,7 +93,6 @@ class Preduct extends Component {
     })
     return (
       <View className='i-prod'>
-
         {render}
       </View>
     )

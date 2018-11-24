@@ -2,6 +2,7 @@ import Taro, {Component} from '@tarojs/taro'
 import {View} from '@tarojs/components'
 import http from '../../utils/http'
 import './index.css'
+import { AtBadge, AtButton} from 'taro-ui'
 
 class MyOrder extends Component{
   config = {
@@ -17,7 +18,8 @@ class MyOrder extends Component{
   }
 
   state = {
-    lists: []
+    lists: [],
+    unread: []
   }
 
   async reload(){
@@ -27,7 +29,8 @@ class MyOrder extends Component{
       this.setState({lists: []})
       return
     }
-    this.setState({lists: res.res})
+    let unread = await http.get('/no_read', {unionid: id})
+    this.setState({lists: res.res,unread: unread.res})
   }
 
   async componentDidShow() {
@@ -51,7 +54,7 @@ class MyOrder extends Component{
   
 
   render(){
-    let {lists} = this.state
+    let {lists, unread} = this.state
     return (
       <View>
         {lists.map(value => (
@@ -80,12 +83,14 @@ class MyOrder extends Component{
             <view slot='content' className='i-contents'>
               <i-icon type='praise_fill' />
               {`是否赠送: ${value.type?'是':'否'}`}</view>
-            <view slot='content'>
-              <i-button inline onClick={this.chat.bind(this, value)} type='success' size='small' shape='circle'>发送消息
-              </i-button>
-              <i-button inline onClick={this.get.bind(this, value)} type='warning' size='small' shape='circle'>完成订单
-              </i-button>
-            </view>
+            <View slot='content' style={{marginTop:'15px'}}>
+              <AtBadge value={unread.indexOf(value.id)==-1?'':'有未读消息'}>
+                <AtButton inline onClick={this.chat.bind(this, value)} type='secondary' size='small' shape='circle'>发送消息
+                </AtButton></AtBadge>
+              <AtBadge customStyle={{marginLeft: '10px'}}>
+              <AtButton inline onClick={this.get.bind(this, value)} type='primary' size='small' shape='circle'>完成订单
+              </AtButton></AtBadge>
+            </View>
           </i-card>
             ))}
         {lists.length<=0?<view className={'null-order'}>无订单</view>: ''}

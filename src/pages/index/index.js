@@ -1,7 +1,7 @@
 import Taro, {Component} from '@tarojs/taro'
-import {View, Swiper, SwiperItem, Image, Text} from '@tarojs/components'
+import {View, Image, Text} from '@tarojs/components'
 // import one from '../../img/1.jpg'
-import two from '../../img/2.jpg'
+// import two from '../../img/2.jpg'
 // import three from '../../img/3.jpg'
 import news from '../../img/news.jpg'
 import Ac from '../../icon/1.svg'
@@ -66,7 +66,7 @@ class Index extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      current: 1,
+      current: 0,
       duration: 500,
       interval: 5000,
       isCircular: false,
@@ -95,10 +95,10 @@ class Index extends Component {
   async update() {
     const updateManager = wx.getUpdateManager()
     updateManager.onCheckForUpdate(function (res) {
-    // 请求完新版本信息的回调
+      // 请求完新版本信息的回调
 
       // console.log(res)
-      if(res.hasUpdate){
+      if (res.hasUpdate) {
         updateManager.onUpdateReady(function () {
           wx.showModal({
             title: '更新提示',
@@ -144,6 +144,14 @@ class Index extends Component {
     }
   }
 
+  handleClick(current){
+    if(current==1){
+      Taro.navigateTo({url:'/pages/prud/index'})
+    }else if (current==2) {
+      Taro.navigateTo({url:'/pages/pers/index'})
+    }
+  }
+
   render() {
     const {current, isAutoplay, duration, isCircular, interval, hasIndicatorDots, items, visible} = this.state;
     const groups = loda.chunk(items, 3);
@@ -163,38 +171,10 @@ class Index extends Component {
         </i-row>
       )
     })
-    // const Items = items.map((value) => {
-    //   return (
-    //
-    //   )
-    //
-    // })
-    return (
-      <View className='i-prod'>
+
+    let page = (
+      <View>
         <View className='swip-index'>
-          {/*<Swiper*/}
-            {/*slideMult='10'*/}
-            {/*indicatorColor='#999'*/}
-            {/*indicatorActiveColor='#333'*/}
-            {/*current={current}*/}
-            {/*duration={duration}*/}
-            {/*interval={interval}*/}
-            {/*circular={isCircular}*/}
-            {/*autoplay={isAutoplay}*/}
-            {/*indicatorDots={hasIndicatorDots}*/}
-            {/*preMargin='20'*/}
-            {/*style='height: 240px;'*/}
-          {/*>*/}
-            {/*<SwiperItem>*/}
-              {/*<Image src={one} style='width: 100%;'></Image>*/}
-            {/*</SwiperItem>*/}
-            {/*<SwiperItem>*/}
-              {/*<Image src={two} style='width: 100%;'></Image>*/}
-            {/*</SwiperItem>*/}
-            {/*<SwiperItem>*/}
-              {/*<Image src={news} style='width: 100%;'></Image>*/}
-            {/*</SwiperItem>*/}
-          {/*</Swiper>*/}
           <Image src={news} style='width: 100%;'></Image>
         </View>
         <i-grid>
@@ -204,6 +184,27 @@ class Index extends Component {
           <Text>您未关注我们的公众号，请先关注我们的公众号吧! 不然无法提交订单</Text>
           <Image src={qr} className='qr-image' style='width: 275px;'></Image>
         </i-modal>
+      </View>
+    )
+
+
+    return (
+      <View className='i-prod'>
+
+        {page}
+        {/*<AtTabBar*/}
+          {/*backgroundColor='#fff'*/}
+          {/*// color='#f0f0f0'*/}
+          {/*selectedColor='#1afa29'*/}
+          {/*fixed*/}
+          {/*tabList={[*/}
+            {/*{ title: '回收', iconPrefixClass: 'iconfont icon-home',iconType: 'clock'},*/}
+            {/*{ title: '积分商城', iconPrefixClass: 'iconfont icon-shangcheng', iconType: 'clock'},*/}
+            {/*{ title: '个人中心', iconPrefixClass: 'iconfont icon-gerenzhongxin', iconType: 'clock', dot: true  }*/}
+          {/*]}*/}
+          {/*onClick={this.handleClick.bind(this)}*/}
+          {/*current={this.state.current}*/}
+        {/*/>*/}
       </View>
     )
   }

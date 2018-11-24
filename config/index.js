@@ -52,6 +52,10 @@ const config = {
       postcss: {
         pxtransform: {
           selectorBlackList: [/^.van-.*?$/,/^.i-.*?$/]
+        },
+        url: {
+          enable: true,
+          limit: 102400000000
         }
       }
     }
