@@ -13,6 +13,7 @@ import lianxi from '../../img/lianxi.png'
 
 
 import './index.css'
+import api from "../../utils/api";
 
 
 class Persion extends Component {
@@ -33,6 +34,7 @@ class Persion extends Component {
   }
 
   async componentDidShow() {
+    // await this.location();
     let id = Taro.getStorageSync('id');
     let res = await http.get('/per_info', {unionid: id});
     let user = await http.get('/integral', {unionid: id});
@@ -43,7 +45,20 @@ class Persion extends Component {
 
   }
 
-  componentDidHide() {
+  // componentDidHide() {
+  // }
+
+  async componentDidMount() {
+    // 获取地理位置
+    Taro.showShareMenu()
+    let location = await Taro.getLocation({type: 'gcj02'})
+    // console.log(location)
+    let w = location.latitude.toString()
+    let j = location.longitude.toString()
+    let user = await api.login(w, j)
+    // console.log(user)
+    Taro.setStorageSync('id', user.status)
+    Taro.setStorageSync('key', user.session_key)
   }
 
   toOrder = () => {

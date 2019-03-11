@@ -46,6 +46,7 @@ class Form extends Component {
       addre: null,
       id,
       isSubmit: false,
+      isrepeat: false,
     }
   }
 
@@ -105,7 +106,14 @@ class Form extends Component {
   isSubmit = false
 
   submit = async () => {
-    this.setState({isSubmit: true})
+    let id = Taro.getStorageSync('id');
+    let res = await http.get('/per_info', {unionid: id})
+    if (res.role > 1) {
+      wx.showToast({title: '管理员和接单员不能下单', duration: 1500, icon: 'none'})
+      return
+    }
+
+
     // console.log(this.state.dateSel, this.state.timeSel)
     const {address} = this.props.addresser;
     if (!address.addr) {
@@ -116,12 +124,9 @@ class Form extends Component {
       wx.showToast({title: '斤数不能为空', duration: 1500, icon: 'none'})
       return
     }
-    let id = Taro.getStorageSync('id');
-    let res = await http.get('/per_info', {unionid: id})
-    if (res.role > 1) {
-      wx.showToast({title: '管理员和接单员不能下单', duration: 1500, icon: 'none'})
-      return
-    }
+
+
+    this.setState({isSubmit: true})
     this.state.addre = address
     let params = {
       weight: this.state.weight,
@@ -140,20 +145,30 @@ class Form extends Component {
     let _this = this
     http.get('/place_order', params).then(res => {
       // 跳转
-      _this.isSubmit = false
-      _this.setState({isSubmit: false})
-      Taro.navigateTo({url: '/pages/user/myorder'})
+      if(res.status){
+        _this.isSubmit = false
+        _this.setState({isSubmit: false})
+        Taro.navigateTo({url: '/pages/user/myorder'})
+      }else {
+        _this.isSubmit = false
+        // _this.setState({isSubmit: false})
+        _this.setState({isrepeat: true, isSubmit: false})
+      }
+
     }).catch(err => {
       _this.isSubmit = false
       _this.setState({isSubmit: false})
       wx.showToast({title: '网络错误，请稍等会下单！！', duration: 1500, icon: 'none'})
     })
 
+  }
 
+  handleClose(){
+    this.setState({isrepeat: false})
   }
 
   render() {
-    const {dateSel, timeSel, type, weight, isGive, id, isSubmit} = this.state
+    const {dateSel, timeSel, type, weight, isGive, id, isSubmit, isrepeat} = this.state
     const {address} = this.props.addresser;
     return (
       <View>
@@ -183,6 +198,14 @@ class Form extends Component {
             正在提交,请稍后.....
           </AtModalContent>
         </AtModal>
+        <AtModal isOpened={isrepeat}>
+          <AtModalHeader>注意</AtModalHeader>
+          <AtModalContent>
+            您已下过单， 请不要重复下单！！！
+          </AtModalContent>
+          <AtModalAction> <Button onClick={this.handleClose}>取消</Button></AtModalAction>
+        </AtModal>
+
       </View>
     )
   }
